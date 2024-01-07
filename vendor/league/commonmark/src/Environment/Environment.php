@@ -21,6 +21,7 @@ use League\CommonMark\Delimiter\Processor\DelimiterProcessorCollection;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Event\ListenerData;
+use League\CommonMark\Exception\AlreadyInitializedException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
@@ -30,6 +31,7 @@ use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Normalizer\UniqueSlugNormalizer;
 use League\CommonMark\Normalizer\UniqueSlugNormalizerInterface;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;
+use League\CommonMark\Parser\Block\SkipLinesStartingWithLettersParser;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlFilter;
@@ -111,6 +113,10 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         $this->inlineParsers       = new PrioritizedList();
         $this->listenerData        = new PrioritizedList();
         $this->delimiterProcessors = new DelimiterProcessorCollection();
+
+        // Performance optimization: always include a block "parser" that aborts parsing if a line starts with a letter
+        // and is therefore unlikely to match any lines as a block start.
+        $this->addBlockStartParser(new SkipLinesStartingWithLettersParser(), 249);
     }
 
     public function getConfiguration(): ConfigurationInterface
@@ -324,10 +330,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function dispatch(object $event)
+    public function dispatch(object $event): object
     {
         if (! $this->extensionsInitialized) {
             $this->initializeExtensions();
@@ -363,6 +366,7 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
         foreach ($this->listenerData as $listenerData) {
             \assert($listenerData instanceof ListenerData);
 
+            /** @psalm-suppress ArgumentTypeCoercion */
             if (! \is_a($event, $listenerData->getEvent())) {
                 continue;
             }
@@ -413,12 +417,12 @@ final class Environment implements EnvironmentInterface, EnvironmentBuilderInter
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws AlreadyInitializedException
      */
     private function assertUninitialized(string $message): void
     {
         if ($this->extensionsInitialized) {
-            throw new \RuntimeException($message . ' Extensions have already been initialized.');
+            throw new AlreadyInitializedException($message . ' Extensions have already been initialized.');
         }
     }
 

@@ -22,6 +22,7 @@ namespace League\CommonMark\Parser;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Event\DocumentPreParsedEvent;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Input\MarkdownInput;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Block\Paragraph;
@@ -33,7 +34,6 @@ use League\CommonMark\Parser\Block\DocumentBlockParser;
 use League\CommonMark\Parser\Block\ParagraphParser;
 use League\CommonMark\Reference\ReferenceInterface;
 use League\CommonMark\Reference\ReferenceMap;
-use League\CommonMark\Util\RegexHelper;
 
 final class MarkdownParser implements MarkdownParserInterface
 {
@@ -82,7 +82,7 @@ final class MarkdownParser implements MarkdownParserInterface
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws CommonMarkException
      */
     public function parse(string $input): Document
     {
@@ -136,17 +136,12 @@ final class MarkdownParser implements MarkdownParserInterface
                 break;
             }
 
-            if (! $this->cursor->isIndented() && RegexHelper::isLetter($this->cursor->getNextNonSpaceCharacter())) {
-                $this->cursor->advanceToNextNonSpaceOrTab();
-                break;
-            }
-
             if ($blockParser->getBlock()->getDepth() >= $this->maxNestingLevel) {
                 break;
             }
 
             $blockStart = $this->findBlockStart($blockParser);
-            if ($blockStart === null) {
+            if ($blockStart === null || $blockStart->isAborting()) {
                 $this->cursor->advanceToNextNonSpaceOrTab();
                 break;
             }
@@ -299,11 +294,14 @@ final class MarkdownParser implements MarkdownParserInterface
         $this->activeBlockParsers[] = $blockParser;
     }
 
+    /**
+     * @throws ParserLogicException
+     */
     private function deactivateBlockParser(): BlockContinueParserInterface
     {
         $popped = \array_pop($this->activeBlockParsers);
         if ($popped === null) {
-            throw new \RuntimeException('The last block parser should not be deactivated');
+            throw new ParserLogicException('The last block parser should not be deactivated');
         }
 
         return $popped;
@@ -333,11 +331,14 @@ final class MarkdownParser implements MarkdownParserInterface
         }
     }
 
+    /**
+     * @throws ParserLogicException
+     */
     public function getActiveBlockParser(): BlockContinueParserInterface
     {
         $active = \end($this->activeBlockParsers);
         if ($active === false) {
-            throw new \RuntimeException('No active block parsers are available');
+            throw new ParserLogicException('No active block parsers are available');
         }
 
         return $active;

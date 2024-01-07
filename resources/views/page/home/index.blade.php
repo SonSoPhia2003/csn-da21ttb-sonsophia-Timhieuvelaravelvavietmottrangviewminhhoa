@@ -10,7 +10,7 @@
                 <div class="col-md-7 ftco-animate">
                     <span class="subheading">Welcome to VHD Travel</span>
                     <h1 class="mb-4">Khám phá địa điểm yêu thích của bạn với chúng tôi</h1>
-                    <p class="caps">Du lịch đến bất kỳ nơi nào bạn chỉ cần liên hệ với chúng tôi</p>
+                    <p class="caps">Du lịch đến bất kỳ nơi nào bạn chỉ cần liên hệ với chúng tôi ( hoặc hướng dẫn viên du lịch: Sơn Sô Phia)</p>
                 </div>
                 <a href="https://www.youtube.com/watch?v=6cwK3nzBBNg" class="icon-video popup-vimeo d-flex align-items-center justify-content-center mb-4">
                     <span class="fa fa-play"></span>

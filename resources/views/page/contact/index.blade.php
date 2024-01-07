@@ -26,7 +26,7 @@
                             <span class="fa fa-map-marker"></span>
                         </div>
                         <h3 class="mb-2">Địa chỉ</h3>
-                        <p> Đường 3/2, Phường Xuân Khánh, Ninh Kiều, Cần Thơ</p>
+                        <p> 126, Nguyễn Thiện Thành, K4, P5, Tp Trà Vinh </p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
@@ -35,7 +35,7 @@
                             <span class="fa fa-phone"></span>
                         </div>
                         <h3 class="mb-2">Số điện thoại liên hệ</h3>
-                        <p><a href="tel://1234567920">1234567890</a></p>
+                        <p><a href="tel://0933242845">0933242845</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
@@ -63,7 +63,7 @@
         <div class="container">
             <div class="row block-9">
                 <div class="col-md-12 order-md-last d-flex">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.5132741062075!2d106.69907491462253!3d10.771944792324629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f40b9124b2b%3A0x8582d6b6cebc0918!2zNjUgxJDGsOG7nW5nIEh14buzbmggVGjDumMgS2jDoW5nLCBC4bq_biBOZ2jDqSwgUXXhuq1uIDEsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1626710237153!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/place/Ao+B%C3%A0+Om/@9.9176145,106.302742,18z/data=!3m1!4b1!4m6!3m5!1s0x31a0171f20bc97cb:0x6c42101d0d79f10d!8m2!3d9.9176081!4d106.3040916!16s%2Fg%2F121t5v7r?entry=ttu" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>

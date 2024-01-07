@@ -25,7 +25,7 @@
                             <span class="fa fa-map-marker"></span>
                         </div>
                         <h3 class="mb-2">Địa chỉ</h3>
-                        <p>Đường 3/2, Phường Xuân Khánh, Ninh Kiều, Cần Thơ</p>
+                        <p>126 Nguyễn Thiện Thành, Phường 5, Trà Vinh</p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
@@ -34,7 +34,7 @@
                             <span class="fa fa-phone"></span>
                         </div>
                         <h3 class="mb-2">Số điện thoại liên hệ</h3>
-                        <p><a href="tel://1234567920">0366890324</a></p>
+                        <p><a href="tel://0933242845">0933242845</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
